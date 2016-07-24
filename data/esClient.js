@@ -12,9 +12,11 @@ const client = new es.Client({
 
 const index = 'pokedex';
 const type = 'pokemon';
+const MAX_SIZE = 1000;
 
 module.exports = {
   client,
   index,
-  type
+  type,
+  MAX_SIZE
 };
