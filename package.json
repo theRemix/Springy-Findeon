@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node .",
     "seed": "node ./scripts/import",
     "test": "./node_modules/.bin/mocha",
     "test-watch": "./node_modules/.bin/mocha --watch"
