@@ -7,7 +7,7 @@ const esConf = {
 };
 const client = new es.Client({
   host : `${esConf.host}:${esConf.port}`,
-  log : 'trace'
+  log : 'error'
 });
 
 const index = 'pokedex';
