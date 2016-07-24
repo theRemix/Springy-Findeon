@@ -17,4 +17,9 @@ router.get('/', ( req, res ) => client.search({ index, type, size : MAX_SIZE, ma
     .then(res.json.bind(res))
 );
 
+router.get('/:id', ( req, res ) => client.get({ index, type, id : req.params.id })
+    .then(getSource)
+    .then(res.json.bind(res))
+);
+
 module.exports = router;
