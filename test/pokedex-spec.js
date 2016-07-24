@@ -76,16 +76,16 @@ describe('Pokedex API', () => {
 
     let response;
     const bulbasaur = {
-      "id":"001",
-      "name":"bulbasaur",
-      "totalStats":"318",
-      "HP":"45",
-      "attack":"49",
-      "defense":"49",
-      "spAtk":"65",
-      "spDef":"65",
-      "speed":"45",
-      "types":["grass","poison"]
+      id:1,
+      name:"bulbasaur",
+      totalStats:318,
+      HP:45,
+      attack:49,
+      defense:49,
+      spAtk:65,
+      spDef:65,
+      speed:45,
+      types:["grass","poison"]
     };
 
     before((setup) => {

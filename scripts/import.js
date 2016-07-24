@@ -11,7 +11,16 @@ client.ping() // wait for connection
       index,
       type,
       id : parseInt(i.id),
-      body : i
+      body : Object.assign(i, {
+        id : parseInt(i.id),
+        totalStats : parseInt(i.totalStats),
+        HP : parseInt(i.HP),
+        attack : parseInt(i.attack),
+        defense : parseInt(i.defense),
+        spAtk : parseInt(i.spAtk),
+        spDef : parseInt(i.spDef),
+        speed : parseInt(i.speed)
+      })
     }))
     .forEach(doc => client.create(doc)
       .then(console.log)
