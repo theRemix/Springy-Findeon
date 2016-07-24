@@ -2,7 +2,7 @@
 
 
 const { client, index, type } = require('../data/esClient');
-const ds = require('./pokedex');
+const ds = require('../data/pokedex');
 
 client.ping() // wait for connection
   .then(() => client.indices.create({ index, type }))
