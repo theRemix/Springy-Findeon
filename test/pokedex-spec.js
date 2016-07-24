@@ -72,4 +72,34 @@ describe('Pokedex API', () => {
 
   });
 
+  describe('GET /api/pokedex/1', () => {
+
+    let response;
+    const bulbasaur = {
+      "id":"001",
+      "name":"bulbasaur",
+      "totalStats":"318",
+      "HP":"45",
+      "attack":"49",
+      "defense":"49",
+      "spAtk":"65",
+      "spDef":"65",
+      "speed":"45",
+      "types":["grass","poison"]
+    };
+
+    before((setup) => {
+      response = null;
+      agent.get('/api/pokedex/1')
+        .expect(200)
+        .expect('Content-Type', /json/)
+        .expect(res => response = res)
+        .end(setup);
+    });
+
+    it('should be a json object', () => response.body.should.not.be.an.instanceof(Array) );
+
+    it('should return bulbasaur', () => response.body.should.deep.equal(bulbasaur) );
+  });
+
 });
