@@ -19,11 +19,23 @@ docker run --name es -p 9201:9200 -d elasticsearch
 ## Seed the index
 
 ```
-ES_PORT=9201 node scripts/import
+ES_PORT=9201 npm run seed
 ```
 
 ## Run the project
 
 ```
-ES_PORT=9201 node .
+ES_PORT=9201 npm start
+```
+
+## Run tests
+
+```
+ES_PORT=9201 npm test
+```
+
+## BDD
+
+```
+ES_PORT=9201 npm run test-watch
 ```
