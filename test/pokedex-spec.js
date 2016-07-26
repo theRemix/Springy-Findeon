@@ -546,4 +546,57 @@ describe('Pokedex API', () => {
 
   });
 
+  describe('GET /api/pokedex/:stat/above/:value', () => {
+
+    describe(':stat => "attack", :value => "180"', () => {
+      let response;
+      const results = [
+        {
+          "id": 150,
+          "name": "mewtwomegamewtwox",
+          "totalStats": 780,
+          "HP": 106,
+          "attack": 190,
+          "defense": 100,
+          "spAtk": 154,
+          "spDef": 100,
+          "speed": 130,
+          "types": [
+            "fighting",
+            "psychic"
+          ]
+        },
+        {
+          "id": 384,
+          "name": "rayquazamegarayquaza",
+          "totalStats": 780,
+          "HP": 105,
+          "attack": 180,
+          "defense": 100,
+          "spAtk": 180,
+          "spDef": 100,
+          "speed": 115,
+          "types": [
+            "dragon",
+            "flying"
+          ]
+        }
+      ];
+
+      before((setup) => {
+        response = null;
+        agent.get('/api/pokedex/attack/above/180')
+          .expect(200)
+          .expect('Content-Type', /json/)
+          .expect(res => response = res)
+          .end(setup);
+      });
+
+      it('should be an array', () => response.body.should.be.an.instanceof(Array) );
+
+      it('should return 2 results, mewtwomegamewtwox and rayquazamegarayquaza', () => response.body.should.deep.equal(results) );
+    });
+
+  });
+
 });
