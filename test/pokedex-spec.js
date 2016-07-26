@@ -200,4 +200,148 @@ describe('Pokedex API', () => {
     });
   });
 
+  describe('GET /api/pokedex/startsWith/:prefix', () => {
+
+    describe(':prefix => "star"', () => {
+      let response;
+      const results = [
+        {
+          "id": 120,
+          "name": "staryu",
+          "totalStats": 340,
+          "HP": 30,
+          "attack": 45,
+          "defense": 55,
+          "spAtk": 70,
+          "spDef": 55,
+          "speed": 85,
+          "types": [
+            "water"
+          ]
+        },
+        {
+          "id": 397,
+          "name": "staravia",
+          "totalStats": 340,
+          "HP": 55,
+          "attack": 75,
+          "defense": 50,
+          "spAtk": 40,
+          "spDef": 40,
+          "speed": 80,
+          "types": [
+            "flying",
+            "normal"
+          ]
+        },
+        {
+          "id": 396,
+          "name": "starly",
+          "totalStats": 245,
+          "HP": 40,
+          "attack": 55,
+          "defense": 30,
+          "spAtk": 30,
+          "spDef": 30,
+          "speed": 60,
+          "types": [
+            "flying",
+            "normal"
+          ]
+        },
+        {
+          "id": 398,
+          "name": "staraptor",
+          "totalStats": 485,
+          "HP": 85,
+          "attack": 120,
+          "defense": 70,
+          "spAtk": 50,
+          "spDef": 60,
+          "speed": 100,
+          "types": [
+            "flying",
+            "normal"
+          ]
+        },
+        {
+          "id": 121,
+          "name": "starmie",
+          "totalStats": 520,
+          "HP": 60,
+          "attack": 75,
+          "defense": 85,
+          "spAtk": 100,
+          "spDef": 85,
+          "speed": 115,
+          "types": [
+            "psychic",
+            "water"
+          ]
+        }
+      ];
+
+      before((setup) => {
+        response = null;
+        agent.get('/api/pokedex/startsWith/star')
+          .expect(200)
+          .expect('Content-Type', /json/)
+          .expect(res => response = res)
+          .end(setup);
+      });
+
+      it('should be an array', () => response.body.should.be.an.instanceof(Array) );
+
+      it('should return 5 results, staryu, staravia, starly and staraptor', () => response.body.should.deep.equal(results) );
+    });
+
+    describe(':prefix => "bli"', () => {
+      let response;
+      const results = [
+        {
+          "id": 522,
+          "name": "blitzle",
+          "totalStats": 295,
+          "HP": 45,
+          "attack": 60,
+          "defense": 32,
+          "spAtk": 50,
+          "spDef": 32,
+          "speed": 76,
+          "types": [
+            "electric"
+          ]
+        },
+        {
+          "id": 242,
+          "name": "blissey",
+          "totalStats": 540,
+          "HP": 255,
+          "attack": 10,
+          "defense": 10,
+          "spAtk": 75,
+          "spDef": 135,
+          "speed": 55,
+          "types": [
+            "normal"
+          ]
+        }
+      ];
+
+      before((setup) => {
+        response = null;
+        agent.get('/api/pokedex/startsWith/bli')
+          .expect(200)
+          .expect('Content-Type', /json/)
+          .expect(res => response = res)
+          .end(setup);
+      });
+
+      it('should be an array', () => response.body.should.be.an.instanceof(Array) );
+
+      it('should return 2 results, blitzle and blissey', () => response.body.should.deep.equal(results) );
+    });
+  });
+
+
 });
