@@ -39,4 +39,20 @@ router.get('/search/:query', ( req, res ) => client.search({
   .then(res.json.bind(res))
 );
 
+router.get('/startswith/:prefix', ( req, res ) => client.search({
+    index,
+    type,
+    size,
+    body : {
+      query : {
+        wildcard : {
+          name: `${req.params.prefix}*`
+        }
+      }
+    }
+  })
+  .then(getHitSource)
+  .then(res.json.bind(res))
+);
+
 module.exports = router;
