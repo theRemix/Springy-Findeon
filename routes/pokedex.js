@@ -85,4 +85,20 @@ router.get('/types/and/*', ( req, res ) => client.search({
   .then(res.json.bind(res))
 );
 
+router.get('/:stat/is/:value', ( req, res ) => client.search({
+    index,
+    type,
+    size,
+    body : {
+      query : {
+        term : {
+          [ `${req.params.stat}` ] : req.params.value
+        }
+      }
+    }
+  })
+  .then(getHitSource)
+  .then(res.json.bind(res))
+);
+
 module.exports = router;
