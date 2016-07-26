@@ -402,7 +402,7 @@ describe('Pokedex API', () => {
 
       it('should return 127 results', () => response.body.length.should.equal(127) );
 
-      it('should only contain results of fire or ice type pokemon', () =>
+      it('should only contain results of fire or ice or fairy type pokemon', () =>
         response.body.every(p =>
           p.types.indexOf('fire') >= 0 ||
           p.types.indexOf('ice') >= 0 ||
