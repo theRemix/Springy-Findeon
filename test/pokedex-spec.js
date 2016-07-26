@@ -477,4 +477,73 @@ describe('Pokedex API', () => {
     });
   });
 
+  describe('GET /api/pokedex/:stat/is/:value', () => {
+
+    const results = [
+      {
+        "id": 143,
+        "name": "snorlax",
+        "totalStats": 540,
+        "HP": 160,
+        "attack": 110,
+        "defense": 65,
+        "spAtk": 65,
+        "spDef": 110,
+        "speed": 30,
+        "types": [
+          "normal"
+        ]
+      }
+    ];
+
+    describe(':stat => "HP", :value => "160"', () => {
+      let response;
+      before((setup) => {
+        response = null;
+        agent.get('/api/pokedex/HP/is/160')
+          .expect(200)
+          .expect('Content-Type', /json/)
+          .expect(res => response = res)
+          .end(setup);
+      });
+
+      it('should be an array', () => response.body.should.be.an.instanceof(Array) );
+
+      it('should return 1 result, snorlax', () => response.body.should.deep.equal(results) );
+    });
+
+    describe(':stat => "name", :value => "snorlax"', () => {
+      let response;
+      before((setup) => {
+        response = null;
+        agent.get('/api/pokedex/name/is/snorlax')
+          .expect(200)
+          .expect('Content-Type', /json/)
+          .expect(res => response = res)
+          .end(setup);
+      });
+
+      it('should be an array', () => response.body.should.be.an.instanceof(Array) );
+
+      it('should return 1 result, snorlax', () => response.body.should.deep.equal(results) );
+    });
+
+    describe(':stat => "name", :value => "snorla"', () => {
+      let response;
+      before((setup) => {
+        response = null;
+        agent.get('/api/pokedex/name/is/snorla')
+          .expect(200)
+          .expect('Content-Type', /json/)
+          .expect(res => response = res)
+          .end(setup);
+      });
+
+      it('should be an array', () => response.body.should.be.an.instanceof(Array) );
+
+      it('should return 0 results', () => response.body.length.should.equal(0) );
+    });
+
+  });
+
 });
