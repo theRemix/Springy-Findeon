@@ -366,6 +366,27 @@ describe('Pokedex API', () => {
 
     });
 
+    describe('types/or/fire/ice', () => {
+      let response;
+      before((setup) => {
+        response = null;
+        agent.get('/api/pokedex/types/or/fire/ice')
+          .expect(200)
+          .expect('Content-Type', /json/)
+          .expect(res => response = res)
+          .end(setup);
+      });
+
+      it('should be an array', () => response.body.should.be.an.instanceof(Array) );
+
+      it('should return 92 results', () => response.body.length.should.equal(92) );
+
+      it('should only contain results of fire or ice type pokemon', () =>
+        response.body.every(p => p.types.indexOf('fire') >= 0 || p.types.indexOf('ice') >= 0)
+      );
+
+    });
+
   });
 
 
