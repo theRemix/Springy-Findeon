@@ -438,6 +438,27 @@ describe('Pokedex API', () => {
 
     });
 
+    describe('types/and/water/grass', () => {
+      let response;
+      before((setup) => {
+        response = null;
+        agent.get('/api/pokedex/types/and/water/grass')
+          .expect(200)
+          .expect('Content-Type', /json/)
+          .expect(res => response = res)
+          .end(setup);
+      });
+
+      it('should be an array', () => response.body.should.be.an.instanceof(Array) );
+
+      it('should return 3 results', () => response.body.length.should.equal(3) );
+
+      it('should only contain results of water and grass type pokemon', () =>
+        response.body.every(p => p.types.indexOf('fire') >= 0 && p.types.indexOf('ice') >= 0)
+      );
+
+    });
+
   });
 
 });
