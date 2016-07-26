@@ -55,4 +55,18 @@ router.get('/startswith/:prefix', ( req, res ) => client.search({
   .then(res.json.bind(res))
 );
 
+router.get('/types/or/*', ( req, res ) => client.search({
+    index,
+    type,
+    size,
+      body : {
+        query : {
+          terms : { types : req.params[0].split('/') }
+        }
+      }
+  })
+  .then(getHitSource)
+  .then(res.json.bind(res))
+);
+
 module.exports = router;
