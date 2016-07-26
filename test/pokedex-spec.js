@@ -415,4 +415,29 @@ describe('Pokedex API', () => {
   });
 
 
+  describe('GET /api/pokedex/types/and/*', () => {
+
+    describe('types/and/fire', () => {
+      let response;
+      before((setup) => {
+        response = null;
+        agent.get('/api/pokedex/types/and/fire')
+          .expect(200)
+          .expect('Content-Type', /json/)
+          .expect(res => response = res)
+          .end(setup);
+      });
+
+      it('should be an array', () => response.body.should.be.an.instanceof(Array) );
+
+      it('should return 57 results', () => response.body.length.should.equal(57) );
+
+      it('should only contain results of fire type pokemon', () =>
+        response.body.every(p => p.types.indexOf('fire') >= 0)
+      );
+
+    });
+
+  });
+
 });
