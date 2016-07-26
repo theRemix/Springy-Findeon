@@ -459,6 +459,22 @@ describe('Pokedex API', () => {
 
     });
 
+    describe('types/and/water/grass/flying', () => {
+      let response;
+      before((setup) => {
+        response = null;
+        agent.get('/api/pokedex/types/and/water/grass/flying')
+          .expect(200)
+          .expect('Content-Type', /json/)
+          .expect(res => response = res)
+          .end(setup);
+      });
+
+      it('should be an array', () => response.body.should.be.an.instanceof(Array) );
+
+      it('should return 0 results', () => response.body.length.should.equal(0) );
+
+    });
   });
 
 });
