@@ -137,4 +137,23 @@ router.get('/:stat/below/:value', ( req, res ) => client.search({
   .then(res.json.bind(res))
 );
 
+router.get('/:stat/between/:low/:high', ( req, res ) => client.search({
+    index,
+    type,
+    size,
+    body : {
+      query : {
+        range : {
+          [ `${req.params.stat}` ] : {
+            gte : req.params.low,
+            lt : req.params.high
+          }
+        }
+      }
+    }
+  })
+  .then(getHitSource)
+  .then(res.json.bind(res))
+);
+
 module.exports = router;
