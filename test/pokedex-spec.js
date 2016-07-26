@@ -599,4 +599,55 @@ describe('Pokedex API', () => {
 
   });
 
+  describe('GET /api/pokedex/:stat/below/:value', () => {
+
+    describe(':stat => "defense", :value => "10"', () => {
+      let response;
+      const results = [
+        {
+          "id": 113,
+          "name": "chansey",
+          "totalStats": 450,
+          "HP": 250,
+          "attack": 5,
+          "defense": 5,
+          "spAtk": 35,
+          "spDef": 105,
+          "speed": 50,
+          "types": [
+            "normal"
+          ]
+        },
+        {
+          "id": 440,
+          "name": "happiny",
+          "totalStats": 220,
+          "HP": 100,
+          "attack": 5,
+          "defense": 5,
+          "spAtk": 15,
+          "spDef": 65,
+          "speed": 30,
+          "types": [
+            "normal"
+          ]
+        }
+      ];
+
+      before((setup) => {
+        response = null;
+        agent.get('/api/pokedex/defense/below/10')
+          .expect(200)
+          .expect('Content-Type', /json/)
+          .expect(res => response = res)
+          .end(setup);
+      });
+
+      it('should be an array', () => response.body.should.be.an.instanceof(Array) );
+
+      it('should return 2 results, chansey and happiny', () => response.body.should.deep.equal(results) );
+    });
+
+  });
+
 });
