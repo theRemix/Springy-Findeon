@@ -102,4 +102,102 @@ describe('Pokedex API', () => {
     it('should return bulbasaur', () => response.body.should.deep.equal(bulbasaur) );
   });
 
+  describe('GET /api/pokedex/search/:query', () => {
+
+    describe(':query => "sy"', () => {
+      let response;
+      const results = [
+        {
+          "id": 54,
+          "name": "psyduck",
+          "totalStats": 320,
+          "HP": 50,
+          "attack": 52,
+          "defense": 48,
+          "spAtk": 65,
+          "spDef": 50,
+          "speed": 55,
+          "types": [
+              "water"
+          ]
+        },
+        {
+          "id": 700,
+          "name": "sylveon",
+          "totalStats": 525,
+          "HP": 95,
+          "attack": 65,
+          "defense": 65,
+          "spAtk": 110,
+          "spDef": 130,
+          "speed": 60,
+          "types": [
+              "fairy"
+          ]
+        }
+      ];
+
+      before((setup) => {
+        response = null;
+        agent.get('/api/pokedex/search/sy')
+          .expect(200)
+          .expect('Content-Type', /json/)
+          .expect(res => response = res)
+          .end(setup);
+      });
+
+      it('should be an array', () => response.body.should.be.an.instanceof(Array) );
+
+      it('should return 2 results, psyduck and sylveon', () => response.body.should.deep.equal(results) );
+    });
+
+    describe(':query => "py"', () => {
+      let response;
+      const results = [
+        {
+          "id": 668,
+          "name": "pyroar",
+          "totalStats": 507,
+          "HP": 86,
+          "attack": 68,
+          "defense": 72,
+          "spAtk": 109,
+          "spDef": 66,
+          "speed": 106,
+          "types": [
+            "fire",
+            "normal"
+          ]
+        },
+        {
+          "id": 231,
+          "name": "phanpy",
+          "totalStats": 330,
+          "HP": 90,
+          "attack": 60,
+          "defense": 60,
+          "spAtk": 40,
+          "spDef": 40,
+          "speed": 40,
+          "types": [
+            "ground"
+          ]
+        }
+      ];
+
+      before((setup) => {
+        response = null;
+        agent.get('/api/pokedex/search/py')
+          .expect(200)
+          .expect('Content-Type', /json/)
+          .expect(res => response = res)
+          .end(setup);
+      });
+
+      it('should be an array', () => response.body.should.be.an.instanceof(Array) );
+
+      it('should return 2 results, pyroar and phanpy', () => response.body.should.deep.equal(results) );
+    });
+  });
+
 });
