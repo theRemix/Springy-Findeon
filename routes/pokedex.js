@@ -69,4 +69,20 @@ router.get('/types/or/*', ( req, res ) => client.search({
   .then(res.json.bind(res))
 );
 
+router.get('/types/and/*', ( req, res ) => client.search({
+    index,
+    type,
+    size,
+      body : {
+        query : {
+          bool : {
+            must : req.params[0].split('/').map(p => ({ term : { types : p } }))
+          }
+        }
+      }
+  })
+  .then(getHitSource)
+  .then(res.json.bind(res))
+);
+
 module.exports = router;
