@@ -23,4 +23,20 @@ router.get('/:id', ( req, res ) => client.get({ index, type, id : req.params.id 
     .then(res.json.bind(res))
 );
 
+router.get('/search/:query', ( req, res ) => client.search({
+    index,
+    type,
+    size,
+    body : {
+      query : {
+        wildcard : {
+          name: `*${req.params.query}*`
+        }
+      }
+    }
+  })
+  .then(getHitSource)
+  .then(res.json.bind(res))
+);
+
 module.exports = router;
