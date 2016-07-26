@@ -650,4 +650,132 @@ describe('Pokedex API', () => {
 
   });
 
+  describe('GET /api/pokedex/:stat/between/:low/:high', () => {
+
+    describe(':stat => "totalStats", :low => "750", :high => 800', () => {
+      let response;
+      const results = [
+        {
+          "id": 150,
+          "name": "mewtwomegamewtwox",
+          "totalStats": 780,
+          "HP": 106,
+          "attack": 190,
+          "defense": 100,
+          "spAtk": 154,
+          "spDef": 100,
+          "speed": 130,
+          "types": [
+            "fighting",
+            "psychic"
+          ]
+        },
+        {
+          "id": 384,
+          "name": "rayquazamegarayquaza",
+          "totalStats": 780,
+          "HP": 105,
+          "attack": 180,
+          "defense": 100,
+          "spAtk": 180,
+          "spDef": 100,
+          "speed": 115,
+          "types": [
+            "dragon",
+            "flying"
+          ]
+        },
+        {
+          "id": 382,
+          "name": "kyogreprimalkyogre",
+          "totalStats": 770,
+          "HP": 100,
+          "attack": 150,
+          "defense": 90,
+          "spAtk": 180,
+          "spDef": 160,
+          "speed": 90,
+          "types": [
+            "water"
+          ]
+        }
+      ];
+
+      before((setup) => {
+        response = null;
+        agent.get('/api/pokedex/totalStats/between/750/800')
+          .expect(200)
+          .expect('Content-Type', /json/)
+          .expect(res => response = res)
+          .end(setup);
+      });
+
+      it('should be an array', () => response.body.should.be.an.instanceof(Array) );
+
+      it('should return 3 results, mewtwomegamewtwox, rayquazamegarayquaza, and kyogreprimalkyogre', () => response.body.should.deep.equal(results) );
+    });
+
+    describe(':stat => "name", :low => "meo", :high => "met"', () => {
+      let response;
+      const results = [
+        {
+          "id": 52,
+          "name": "meowth",
+          "totalStats": 290,
+          "HP": 40,
+          "attack": 45,
+          "defense": 35,
+          "spAtk": 40,
+          "spDef": 40,
+          "speed": 90,
+          "types": [
+            "normal"
+          ]
+        },
+        {
+          "id": 481,
+          "name": "mesprit",
+          "totalStats": 580,
+          "HP": 80,
+          "attack": 105,
+          "defense": 105,
+          "spAtk": 105,
+          "spDef": 105,
+          "speed": 80,
+          "types": [
+            "psychic"
+          ]
+        },
+        {
+          "id": 678,
+          "name": "meowsticmale",
+          "totalStats": 466,
+          "HP": 74,
+          "attack": 48,
+          "defense": 76,
+          "spAtk": 83,
+          "spDef": 81,
+          "speed": 104,
+          "types": [
+            "psychic"
+          ]
+        }
+      ];
+
+      before((setup) => {
+        response = null;
+        agent.get('/api/pokedex/name/between/meo/met')
+          .expect(200)
+          .expect('Content-Type', /json/)
+          .expect(res => response = res)
+          .end(setup);
+      });
+
+      it('should be an array', () => response.body.should.be.an.instanceof(Array) );
+
+      it('should return 3 results, meowth, mesprit, and meowsticmale', () => response.body.should.deep.equal(results) );
+    });
+
+  });
+
 });
